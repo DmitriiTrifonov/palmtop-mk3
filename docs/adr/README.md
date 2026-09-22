@@ -14,6 +14,7 @@ CAD. See [ADR-0001](0001-record-architecture-decisions.md) for why.
 | [0007](0007-cad-toolchain.md) | CAD toolchain | **Accepted** — build123d, model is Python in `cad/` |
 | [0008](0008-base-floor.md) | Base floor | **Accepted** — full 1.2 mm floor kept; Option E open | Task 0.4 (Option E only) |
 | [0009](0009-closure-retention.md) | Keeping the device shut when closed | Proposed | Coupon 2.2 — does hinge torque survive 100 cycles |
+| [0010](0010-hinge-station-count.md) | How many hinge stations, and how a bolt reaches its pocket | Proposed — two stations, heads outboard | First article — does the lid sag at mid-span |
 
 ## Dependency order
 
@@ -80,3 +81,11 @@ a lid the same depth as the base **does not open at all** — its rear overhang
 drives straight into the setback tail. The lid is therefore 197 x 90 and the base
 197 x 105, with the tail exposed even when shut, exactly as a laptop's hinge
 region is. Full 0-180 deg remains available.
+
+0010 came out of a question asked while looking at an assembly drawing: would the
+bolt actually go in? It would not. The lid's rounded rear is a solid cylinder
+coaxial with the hinge, so it blocks the bolt's path equally at every opening
+angle, and the centre station had no path at all. Neither the interference check
+nor the 0-180 deg sweep could see it — an unassemblable joint overlaps nothing.
+The station count dropped to two and `build.py` gained a corridor check, next to
+the connectivity check added the same day for the same class of blindness.

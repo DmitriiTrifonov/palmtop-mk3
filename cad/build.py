@@ -29,6 +29,34 @@ def main():
         print(f"  {name:6s} {bb.size.X:7.2f} x {bb.size.Y:7.2f} x {bb.size.Z:6.2f}"
               f"   {part.volume/1000:6.1f} cm3   {part.volume*p.mat_density:5.1f} g")
 
+    # One part must be ONE solid. A floating island slices as a separate object
+    # and lifts off the bed: the lid's middle knuckle did exactly that, because
+    # the station relief was cut across its own band and severed it from the lid.
+    print("\nconnectivity")
+    for name, part in (("base", base), ("lid", lid)):
+        n = len(part.solids())
+        print(f"  {name + ' solids':32s} {n:8d}      want 1      "
+              f"{'ok' if n == 1 else 'DETACHED ISLAND'}")
+        if n != 1:
+            FAIL.append(f"{name} is {n} solids")
+
+    # A bolt head that cannot travel down the axis into its pocket is a joint
+    # that cannot be assembled at all - and neither the interference check nor
+    # the opening sweep notices, because the obstruction is coaxial with the
+    # hinge and so moves with it. This is what killed the centre station.
+    print("\nassembly access")
+    half = p.station_w / 2
+    for x0 in p.station_x:
+        s_dir = m.outboard(x0)
+        corridor = m.x_cyl(p.head_dia + 0.1, 30,
+                           x0 + s_dir * (half + 15), p.hinge_axis_y, p.hinge_axis_z)
+        blocked = ((base + lid) & corridor).volume
+        label = f"bolt head corridor X={x0:+.1f}"
+        print(f"  {label:32s} {blocked:8.1f} mm3  want 0.00   "
+              f"{'ok' if blocked < 1.0 else 'OBSTRUCTED'}")
+        if blocked >= 1.0:
+            FAIL.append(label)
+
     print("\ngeometry")
     closed = (base + lid).bounding_box()
     check("closed height", closed.size.Z, p.closed_h_rear)

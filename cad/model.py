@@ -166,12 +166,20 @@ def base_station(x0, grow=0.0):
 
 
 def station_envelope(x0):
-    """Void the lid must provide across the whole station width.
+    """Void the lid must provide for the BASE's knuckles and their posts.
 
-    Radius is the lid's own rear radius plus clearance, so the base's knuckles
-    and posts have somewhere to be at every opening angle - not only closed.
+    The two OUTER bands only. Cutting the middle band as well severs the lid's
+    own knuckle from the lid: the relief radius (5.70) is larger than the
+    knuckle's (4.50), so the knuckle added back afterwards touches nothing and
+    the lid exports as four solids. It printed exactly that way - the middle
+    ring came off the bed as a loose disc - which is how the defect surfaced.
+
+    Radius is the lid's rear radius plus clearance, so the base's knuckles and
+    posts have somewhere to be at every opening angle, not only closed.
     """
-    return x_cyl(2 * p.station_relief_r, p.station_w, x0, AY, AZ)
+    w = p.station_outer_w + 2 * p.knuckle_clr
+    d = 2 * p.station_relief_r
+    return x_cyl(d, w, x0 - _off, AY, AZ) + x_cyl(d, w, x0 + _off, AY, AZ)
 
 
 def lid_knuckle(x0, grow=0.0):
@@ -182,15 +190,38 @@ def bore(x0):
     return x_cyl(p.knuckle_id, p.station_w + 4, x0, AY, AZ)
 
 
+def outboard(x0):
+    """Which way is out of the device from this station."""
+    return 1.0 if x0 >= 0 else -1.0
+
+
 def fasteners(x0):
-    """Nut pocket one side, head-and-washer pocket the other."""
-    half = p.station_w / 2
+    """Head pocket OUTBOARD, nut pocket inboard.
+
+    The head has to arrive along the axis from outside, so it faces out. The nut
+    only has to be dropped into its hex before the lid is nested, so it can face
+    in, where the lid's rounded rear blocks the axis completely.
+    """
+    half, s = p.station_w / 2, outboard(x0)
     hexr = p.nut_af / 2 / cos(radians(30))
-    nut = Pos(x0 - half + p.nut_depth / 2, AY, AZ) * Rot(0, 90, 0) * extrude(
+    nut = Pos(x0 - s * (half - p.nut_depth / 2), AY, AZ) * Rot(0, 90, 0) * extrude(
         RegularPolygon(radius=hexr, side_count=6), amount=p.nut_depth / 2, both=True
     )
-    head = x_cyl(p.head_dia, p.head_depth, x0 + half - p.head_depth / 2, AY, AZ)
+    head = x_cyl(p.head_dia, p.head_depth,
+                 x0 + s * (half - p.head_depth / 2), AY, AZ)
     return nut + head
+
+
+def head_access(x0):
+    """Path for the bolt head through the lid, outboard of the station.
+
+    Without it the head meets 1.6 mm of the lid's rounded rear with only a 3.5
+    hole through it, and the joint cannot be assembled at all.
+    """
+    s = outboard(x0)
+    x_from = x0 + s * p.station_w / 2
+    x_to = s * (p.lid_x / 2 + 3.0)
+    return x_cyl(p.head_access_dia, abs(x_to - x_from), (x_from + x_to) / 2, AY, AZ)
 
 
 def usbc_cut():
@@ -231,6 +262,7 @@ def build(fillets=True):
         base = base - lid_knuckle(x0, p.knuckle_clr) + base_station(x0)
         base = base - bore(x0) - fasteners(x0)
         lid = lid - station_envelope(x0) + lid_knuckle(x0) - bore(x0)
+        lid -= head_access(x0)
     base -= usbc_cut()
     if fillets:
         base = soften(base, p.corner_r, "base", p.base_x / 2, (0.0, p.base_y))

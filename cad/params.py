@@ -37,6 +37,14 @@ kbd_usbc_z_bottom = 3.00      # opening's lower edge above the rest plane
 kbd_usbc_z_top_inset = 2.00   # opening's upper edge below the top of that face
 kbd_usbc_w_ASSUMED = 9.0      # along the keyboard's depth; receptacle is 8.34
 
+# How much that assumption can be wrong, from the cut geometry further down:
+# the opening through the wall spans 6.0 to 19.0 mm back from the keyboard's
+# rear edge, while the connector's near end sits at the MEASURED 8.00. Any true
+# width up to 11.0 mm is therefore cleared, with 2.0 mm spare at the rear end.
+# The receptacle itself is 8.34 and a bezel around it still fits, so the
+# assumption is not on the critical path - coupon 2.1 confirms it against the
+# real keyboard before anything large is printed.
+
 # The side face is a wedge, so its local height depends where you are along it.
 def _kbd_side_h(from_rear):
     return kbd_h_rear - (from_rear / kbd_depth_y) * (kbd_h_rear - kbd_h_front)
@@ -204,7 +212,17 @@ foot_y_rear = None   # set below, hard against the tail's rear edge
 
 # Station X positions. The rear edge carries nothing else, so these are placed
 # purely for anti-racking span: as far apart as the side walls allow.
-station_x = (-87.5, 0.0, 87.5)
+# Two stations, not three. The centre one cannot be assembled: the lid's rounded
+# rear is a solid cylinder about the hinge axis running the full 196.8, so no
+# axial path exists from outside the device to a bolt head at X=0. Rotating the
+# lid does not help - the obstruction is coaxial with the rotation. Both survivors
+# open OUTBOARD, where only 1.6 mm of lid stands in the way. See ADR-0010; whether
+# two stations are stiff enough across the span is what the first article decides.
+station_x = (-87.5, 87.5)
+
+# Clearance bored through the lid outboard of each station so the Ø5.5 head can
+# travel down the axis into its pocket. Ø3.5 - the bolt's own bore - will not.
+head_access_dia = 6.40
 foot_y_rear = base_y - foot_dia / 2 - 1.0
 
 # The tunnel is now a plain opening through the base's right wall - 1.9 mm of

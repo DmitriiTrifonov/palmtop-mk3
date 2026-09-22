@@ -149,7 +149,7 @@ from others here · `A` assumed, not yet verified
 
 ## Hinge stations
 
-At X = -87.5, 0, 87.5, span 175.0 mm between the outermost.
+At X = -87.5, 87.5, span 175.0 mm between the outermost.
 
 ## Still blocked
 
