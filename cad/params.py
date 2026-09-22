@@ -13,7 +13,6 @@ from math import atan, degrees
 # nothing that matters structurally may depend on one.
 BLOCKED = {
     "kbd_rim_recess": "task 0.4",
-    "kbd_usbc_w": "task 0.1 - opening width; only the right end is known",
     "phone_camera_bump": "task 0.6",
 }
 
@@ -36,6 +35,9 @@ kbd_usbc_rear_inset = 8.00    # rear edge to the near end of the connector
 kbd_usbc_z_bottom = 3.00      # opening's lower edge above the rest plane
 kbd_usbc_z_top_inset = 2.00   # opening's upper edge below the top of that face
 kbd_usbc_w_ASSUMED = 9.0      # along the keyboard's depth; receptacle is 8.34
+# CONFIRMED BY FIT 2026-09-22: the printed coupon's window lines up with the real
+# keyboard's port. The width itself is still not measured, but it no longer needs
+# to be - the opening clears it, which is the only thing the number was for.
 
 # How much that assumption can be wrong, from the cut geometry further down:
 # the opening through the wall spans 6.0 to 19.0 mm back from the keyboard's

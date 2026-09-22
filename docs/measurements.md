@@ -52,7 +52,7 @@ right side face; Z from the plane the keyboard rests on.
 | USB-C opening, upper edge below the top of that face | 2.00 | M |
 | Side face height at the port (derived, the face is a wedge) | 8.94 | C |
 | USB-C opening height (derived) | 3.94 | C |
-| USB-C opening width, along the keyboard's depth | assumed 9.0 | ? |
+| USB-C opening width, along the keyboard's depth | assumed 9.0 | ? - confirmed by fit |
 | OFF/ON slide switch | rear edge, not needed | D |
 | LEDs x4 | rear edge, not needed | D |
 
@@ -70,6 +70,14 @@ The switch stays permanently ON and the LEDs are not required to be visible, so
 the keyboard's rear face tops out at 10.72, so a port mounted high on that face
 cannot share an X position with a hinge station — see R1 in
 [plan.md](plan.md). Tasks 0.1 and 0.1b.
+
+**Task 0.1 is closed by fit, not by callipers (2026-09-22).** The first printed
+coupon's window lines up with the real keyboard's port, so the assumed 9.0 never
+has to become a measurement. The tolerance was worked out beforehand and is
+recorded next to the parameter: the opening spans 6.0 to 19.0 back from the
+keyboard's rear edge, against a measured 8.00 where the connector starts, so any
+true width up to 11.0 is cleared with 2.0 to spare at the rear end. A USB-C
+receptacle is 8.34.
 
 This edge is also the natural hinge edge, which is a direct conflict — see
 [ADR-0006](adr/0006-rear-edge-io-vs-hinge.md).

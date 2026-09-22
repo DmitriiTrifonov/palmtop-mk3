@@ -156,5 +156,4 @@ At X = -87.5, 87.5, span 175.0 mm between the outermost.
 | Parameter | Waiting on |
 |---|---|
 | `kbd_rim_recess` | task 0.4 |
-| `kbd_usbc_w` | task 0.1 - opening width; only the right end is known |
 | `phone_camera_bump` | task 0.6 |
