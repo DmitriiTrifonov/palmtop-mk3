@@ -126,10 +126,16 @@ def lid_shell():
         z_at((cam_y0 + cam_y1) / 2, p.phone_z + p.lid_rear_wall / 2),
     ) * Box(p.cam_x1 - p.cam_x0, cam_y1 - cam_y0, p.lid_rear_wall + 2.0)
 
-    # phone USB-C through the right wall
+    # Phone USB-C through the right wall, as a slot open on the screen side
+    # rather than a closed tunnel. Closed, its screen-side roof was 0.73 mm: a
+    # 12 x 18 mm bridge that sagged into the opening when printed face-down and
+    # choked the cable. Open, there is no bridge; the plug lays in from the
+    # screen side, and with the lid shut the slot faces the keyboard.
     uy = ph_y0 + ph_y / 2
-    s -= Pos(p.lid_x / 2 - (p.lid_x - ph_x) / 4, uy, z_at(uy, p.phone_z / 2)) * Box(
-        (p.lid_x - ph_x) / 2 + 2.0, p.phone_usbc_cut_w, p.phone_usbc_cut_h
+    top = z_at(uy, p.phone_z / 2) + p.phone_usbc_cut_h / 2
+    bot = z_at(uy, 0.0) - 3.0   # well past the screen face, tilt included
+    s -= Pos(p.lid_x / 2 - (p.lid_x - ph_x) / 4, uy, (top + bot) / 2) * Box(
+        (p.lid_x - ph_x) / 2 + 2.0, p.phone_usbc_cut_w, top - bot
     )
     return s
 
@@ -195,7 +201,7 @@ def outboard(x0):
     return 1.0 if x0 >= 0 else -1.0
 
 
-def fasteners(x0):
+def fasteners(x0, nut_depth=None):
     """Head pocket OUTBOARD, nut pocket inboard.
 
     The head has to arrive along the axis from outside, so it faces out. The nut
@@ -203,9 +209,10 @@ def fasteners(x0):
     in, where the lid's rounded rear blocks the axis completely.
     """
     half, s = p.station_w / 2, outboard(x0)
+    nd = p.nut_depth if nut_depth is None else nut_depth
     hexr = p.nut_af / 2 / cos(radians(30))
-    nut = Pos(x0 - s * (half - p.nut_depth / 2), AY, AZ) * Rot(0, 90, 0) * extrude(
-        RegularPolygon(radius=hexr, side_count=6), amount=p.nut_depth / 2, both=True
+    nut = Pos(x0 - s * (half - nd / 2), AY, AZ) * Rot(0, 90, 0) * extrude(
+        RegularPolygon(radius=hexr, side_count=6), amount=nd / 2, both=True
     )
     head = x_cyl(p.head_dia, p.head_depth,
                  x0 + s * (half - p.head_depth / 2), AY, AZ)
@@ -256,11 +263,11 @@ def soften(part, radius, name, half_x, y_at):
         return part
 
 
-def build(fillets=True):
+def build(fillets=True, nut_depth=None):
     base, lid = base_shell(), lid_shell()
     for x0 in p.station_x:
         base = base - lid_knuckle(x0, p.knuckle_clr) + base_station(x0)
-        base = base - bore(x0) - fasteners(x0)
+        base = base - bore(x0) - fasteners(x0, nut_depth)
         lid = lid - station_envelope(x0) + lid_knuckle(x0) - bore(x0)
         lid -= head_access(x0)
     base -= usbc_cut()

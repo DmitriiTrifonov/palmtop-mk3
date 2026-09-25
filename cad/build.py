@@ -136,6 +136,26 @@ def main():
         export_stl(part, str(m.OUT / f"mk3-{name}.stl"))
     print(f"exported to {m.OUT}")
 
+    # Plain-nut variant of the base. Only the base carries the nut pocket, so the
+    # lid is shared. A shallower pocket is strictly more material than the part
+    # checked above, so it gets the two checks that could still fail.
+    base_pn, _ = m.build(nut_depth=p.nut_depth_plain)
+    print(f"\nplain-nut variant   DIN 934, pocket {p.nut_depth_plain:.2f}")
+    n = len(base_pn.solids())
+    clash = (base_pn & lid).volume
+    print(f"  {'base solids':32s} {n:8d}      want 1      {'ok' if n == 1 else 'DETACHED ISLAND'}")
+    print(f"  {'closed interference':32s} {clash:8.3f} mm3  want 0.00   "
+          f"{'ok' if clash < 1.0 else 'COLLISION'}")
+    if n != 1:
+        FAIL.append("plain-nut base is not one solid")
+    if clash >= 1.0:
+        FAIL.append("plain-nut closed interference")
+    cb_pn, _ = m.coupon(base_pn, lid)
+    for name, part in (("base-plainnut", base_pn), ("coupon21-base-plainnut", cb_pn)):
+        export_step(part, str(m.OUT / f"mk3-{name}.step"))
+        export_stl(part, str(m.OUT / f"mk3-{name}.stl"))
+    print(f"  exported mk3-base-plainnut, mk3-coupon21-base-plainnut")
+
     # Keep docs/parameters.md from drifting: regenerate it every build.
     import gen_params_doc
     gen_params_doc.main()

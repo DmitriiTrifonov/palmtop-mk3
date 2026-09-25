@@ -45,7 +45,7 @@ Nothing in CAD should start before these exist. Each unblocks a specific ADR.
 | 0.4 | Measure the bottom-rim recess depth at 6+ points around the perimeter | ADR-0008 Option E — **the only remaining thickness reduction** |
 | 0.5 | Measure the physical Mk2's closed height with calipers | benchmark for N1 |
 | ~~0.6~~ | Superseded — Mk2's camera cutout measured off its STL and transferred. It is a through-hole, so the bump height never mattered | — |
-| 0.7 | Buy M3 bolts and nuts plus a range of compliant elements — O-rings, TPU washers, M3 wave washers — so coupon 2.2 tunes torque by swapping rather than reordering | ADR-0005 |
+| 0.7 | Buy M3 x 16 socket caps (DIN 912), M3 nylon-insert nuts (DIN 985 — the pocket is sized for their 4.00 height, and a plain nut would need a threadlocker nobody can re-apply once the lid is in) and a range of compliant elements — 3 x 1 NBR O-rings, TPU washers — so coupon 2.2 tunes torque by swapping rather than reordering. DIN 137B wave washers are 6.0 OD and do not fit the Ø5.80 head pocket | ADR-0005, ADR-0010 |
 | ~~0.8~~ | Superseded — the phone is taped in, as Mk2's was, so there are no retention lips to size | — |
 | 0.9 | Check the phone's magnetometer against a loose magnet at ~8 mm | ADR-0009 Option B |
 | ~~0.10~~ | Superseded — Mk2's button window measured off its STL and transferred; same phone, same orientation, centred in X in both | — |

@@ -135,7 +135,9 @@ cam_from_edge1 = mk2_cam_y1 - _mk2_phone_y0   # 32.05
 # along that edge - standard for this phone, but unverified.
 phone_usbc_centred = True  # A
 phone_usbc_cut_w = 12.0  # along Y, sized for a cable overmould not just the plug
-phone_usbc_cut_h = 7.0   # along Z
+phone_usbc_cut_h = 7.0   # along Z: sets the FLOOR side only - the slot is open
+                         # to the screen side, so 3.5 below the port centre is
+                         # the one limit left on overmould thickness
 
 # --- 6. derived stack -----------------------------------------------------
 parting_rear = base_floor_t + kbd_h_rear + kbd_keycap_rear
@@ -186,7 +188,18 @@ station_w = 2 * station_outer_w + station_inner_w + 2 * 0.20
 # compliant element sits under the head, OUTSIDE the stack, so the spring and
 # the sliding surface are separate parts each doing one job.
 nut_af = 5.70            # across flats, M3 nut 5.5 plus fit
-nut_depth = 2.70
+# DIN 985 nylon-insert nut, 4.00 tall, not a plain DIN 934 with threadlocker.
+# The joint runs at low preload - the O-ring sets 22-25 N - which is exactly
+# where plain threads walk loose, and the nut faces inboard where no one can
+# reach it to re-apply a locker. The wall left behind the pocket is 1.70; at
+# 25 N over the 24 mm2 under the hex that is 1 MPa, against PETG's ~50.
+# The nut's outer face stays at -8.80, so the M3 x 16 still runs 1.10 past it:
+# two threads into the insert. Nylon side OUT, metal face on the pocket floor.
+nut_depth = 4.30
+# Plain DIN 934 (2.40 tall) kept as a second base while the nylon nuts are on
+# order: export/*-plainnut.*. It wants threadlocker, which cannot be re-applied
+# once the lid is nested - fine for a coupon, not what the device should ship with.
+nut_depth_plain = 2.70
 head_dia = 5.80          # M3 socket cap 5.5 plus fit
 head_depth = 3.80        # head 3.0 plus a wave washer
 

@@ -108,6 +108,28 @@ Masses barely move: one station less is 431.0 g solid, 373.7 g printed, against
 the 400 g budget in N4. Tipping margins stay above 1 at 150 and 180 deg on both
 estimates.
 
+**Each station now carries half the hinge torque, not a third** — and the
+torque itself has grown. ADR-0005 sized it at 0.091 N*m from a 207 g lid at
+45 mm; the model now gives 219-250 g (printed estimate to solid, phone
+included) at an arm of 47.70 mm:
+
+```
+device       0.219..0.250 kg * 9.81 * 0.0477 m  =  0.103..0.117 N*m
+per station                                     =  0.051..0.058 N*m
+```
+
+The axial clamp that delivers it — PETG on PETG at mu 0.35, two sliding faces
+per station, r_eff 3.33 mm for a Ø9.00 face around a Ø3.5 bore — is **22-25 N
+per station**, up from ADR-0005's 8.8. Still small for an M3, but no longer an
+order of magnitude below what a 3 x 1 NBR ring gives at 20 % compression, so
+coupon 2.2's measurement now decides something rather than confirming it.
+
+On the one-station coupon, lid held horizontal, that requirement is **58-66 g
+hung at the lid's front edge**, 90.05 mm from the axis. ADR-0005's 1x-3x
+acceptance window becomes roughly: must hold 66 g, should slip before ~175 g.
+The coupon lid's own ~15 g adds about 7 g-equivalent at the edge, which the
+figures ignore, so they err on the demanding side.
+
 **To revisit if the first article sags:** Option B, for the centre station only.
 The number that settles it is deflection at mid-span with the phone's 167 g in
 the lid, at full opening, measured against the base's rim.
