@@ -28,7 +28,7 @@ def main():
     base, lid = m.build()
     axis = Axis((0, p.hinge_axis_y, p.hinge_axis_z), (1, 0, 0))
 
-    for tag, x in (("station", p.station_x[2]),):
+    for tag, x in (("station", p.station_x[-1]),):
         for opening in (0, 90, 180):
             turn = -(opening + p.close_tilt)
             shapes = [s for s in (section_at(base, x),
