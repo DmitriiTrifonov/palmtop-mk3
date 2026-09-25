@@ -17,7 +17,7 @@ BLOCKED = {
 }
 
 # --- 1. keyboard (measured) ----------------------------------------------
-kbd_span_x = 193.00
+kbd_span_x = 194.00  # re-measured 2026-09-25 against a printed base; was 193.00
 kbd_depth_y = 86.25
 kbd_h_rear = 9.52
 kbd_h_front = 5.54
@@ -74,6 +74,11 @@ mat_density = 1.27e-3  # g/mm3, PETG, SOLID
 infill_chunky = 0.42
 wall_t = 1.60
 clr_kbd = 0.30
+# Across the span the pocket needs more than clr_kbd. The first full base
+# printed its pocket 193.0 wide against 193.6 modelled - 0.6 of shrinkage and
+# elephant's foot over a 194 mm run, which a 0.3 per-side gap cannot absorb.
+# Depth is short enough (86 mm) that clr_kbd still holds there.
+clr_kbd_x = 0.60
 clr_phone = 0.30
 
 # The phone is held by double-sided tape, as Mk2's was - no retention lips, so
@@ -93,7 +98,7 @@ keycap_gap = 0.30
 base_floor_t = 1.20  # ADR-0008
 hinge_setback = 15.00  # ADR-0003
 
-base_x = kbd_span_x + 2 * (wall_t + clr_kbd)
+base_x = kbd_span_x + 2 * (wall_t + clr_kbd_x)
 base_depth_to_axis = wall_t + clr_kbd + kbd_depth_y + clr_kbd + wall_t
 base_y = base_depth_to_axis + hinge_setback
 

@@ -60,14 +60,15 @@ SECTIONS = [
     ("Materials and clearances", [
         ("mat_density", "S", "g/mm3, PETG, SOLID — see the note in params.py"),
         ("wall_t", "A", ""),
-        ("clr_kbd", "A", "per side"),
+        ("clr_kbd", "A", "per side, depth"),
+        ("clr_kbd_x", "M", "per side, span: absorbs measured print shrinkage"),
         ("clr_phone", "A", "per side"),
         ("keycap_gap", "D", "held open by the base's rim, not by a liner"),
         ("corner_r", "D", "outer vertical corners"),
     ]),
     ("Base", [
         ("base_floor_t", "D", "ADR-0008"),
-        ("base_x", "C", "kbd_span_x + 2*(wall_t + clr_kbd)"),
+        ("base_x", "C", "kbd_span_x + 2*(wall_t + clr_kbd_x)"),
         ("base_depth_to_axis", "C", ""),
         ("hinge_setback", "D", "ADR-0003"),
         ("base_y", "C", "base_depth_to_axis + hinge_setback"),

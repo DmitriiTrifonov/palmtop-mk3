@@ -15,7 +15,7 @@ Bluetooth keyboard, Russian layout, salvaged from its folio case (case discarded
 
 | Property | Value | Conf |
 |---|---|---|
-| Span (X) | 193.00 | M |
+| Span (X) | 194.00 (first reading 193.00; re-measured when it would not go into a printed pocket) | M |
 | Depth (Y) | 86.25 | M |
 | Height, shell only, rear edge (thickest) | 9.52 | M |
 | Height, shell only, front edge (thinnest) | 5.54 | M |

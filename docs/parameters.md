@@ -18,7 +18,7 @@ from others here · `A` assumed, not yet verified
 
 | Name | Value | St | Note |
 |---|---|---|---|
-| `kbd_span_x` | 193 | M |  |
+| `kbd_span_x` | 194 | M |  |
 | `kbd_depth_y` | 86.25 | M |  |
 | `kbd_h_rear` | 9.52 | M | thickest, rear of the wedge |
 | `kbd_h_front` | 5.54 | M | thinnest, front |
@@ -71,7 +71,8 @@ from others here · `A` assumed, not yet verified
 |---|---|---|---|
 | `mat_density` | 0.00127 | S | g/mm3, PETG, SOLID — see the note in params.py |
 | `wall_t` | 1.6 | A |  |
-| `clr_kbd` | 0.3 | A | per side |
+| `clr_kbd` | 0.3 | A | per side, depth |
+| `clr_kbd_x` | 0.6 | M | per side, span: absorbs measured print shrinkage |
 | `clr_phone` | 0.3 | A | per side |
 | `keycap_gap` | 0.3 | D | held open by the base's rim, not by a liner |
 | `corner_r` | 3 | D | outer vertical corners |
@@ -82,7 +83,7 @@ from others here · `A` assumed, not yet verified
 | Name | Value | St | Note |
 |---|---|---|---|
 | `base_floor_t` | 1.2 | D | ADR-0008 |
-| `base_x` | 196.8 | C | kbd_span_x + 2*(wall_t + clr_kbd) |
+| `base_x` | 198.4 | C | kbd_span_x + 2*(wall_t + clr_kbd_x) |
 | `base_depth_to_axis` | 90.05 | C |  |
 | `hinge_setback` | 15 | D | ADR-0003 |
 | `base_y` | 105.05 | C | base_depth_to_axis + hinge_setback |
@@ -98,7 +99,7 @@ from others here · `A` assumed, not yet verified
 | Name | Value | St | Note |
 |---|---|---|---|
 | `lid_rear_wall` | 1.2 | D | ADR-0004, closed pocket |
-| `lid_x` | 196.8 | C | matches base_x |
+| `lid_x` | 198.4 | C | matches base_x |
 | `lid_y` | 90.05 | C | ends at the hinge axis |
 | `lid_t` | 9.4 | C | lid_rear_wall + phone_z |
 | `lid_rear_radius` | 4.7 | C | half the lid thickness |

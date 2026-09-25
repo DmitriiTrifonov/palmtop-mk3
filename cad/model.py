@@ -58,7 +58,7 @@ def base_shell():
             (p.wall_t + pk_y, p.rim_rear + 5),
             (p.wall_t, p.rim_rear + 5),
         ],
-        p.kbd_span_x + 2 * p.clr_kbd,
+        p.kbd_span_x + 2 * p.clr_kbd_x,
     )
     # Foot pads: shallow locating recesses in the underside for bumpons.
     for fx in (-1, 1):
@@ -233,8 +233,8 @@ def head_access(x0):
 
 def usbc_cut():
     """Opening through the base's right wall for the keyboard's USB-C."""
-    depth = p.wall_t + p.clr_kbd + 2.0
-    x0 = p.kbd_span_x / 2 + p.clr_kbd
+    depth = p.wall_t + p.clr_kbd_x + 2.0
+    x0 = p.kbd_span_x / 2 + p.clr_kbd_x
     return Pos(x0 + depth / 2 - 1.0, p.usbc_centre_y, p.usbc_centre_z) * Box(
         depth, p.usbc_cut_w, p.usbc_cut_h
     )
